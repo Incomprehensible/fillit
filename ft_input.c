@@ -6,7 +6,7 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:34:27 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/10 21:15:21 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:06:05 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h"
 #include "get_next_line.h"
 #include "fcntl.h"
-#include "stdio.h"
 
 void	free_buf(char **buf, int i)
 {
@@ -33,10 +32,13 @@ void	check_buf(char **buf)
 	i = 0;
 	while (i < 4)
 	{
-		printf("|%s|\n", buf[i]);
+		ft_putstr("|");
+		ft_putstr(buf[i]);
+		ft_putstr("|");
+		ft_putstr("\n");
 		i++;
 	}
-	printf("\n");
+	ft_putstr("\n");
 }
 
 char	**fill_buf(int fd)
@@ -47,17 +49,19 @@ char	**fill_buf(int fd)
 	char **buf;
 
 	i = 0;
-	buf = (char **)malloc(sizeof(char *) * 4);
-	while (i < 4 && (check = get_next_line(fd, &line)))
+	if ((buf = (char **)malloc(sizeof(char *) * 4)))
 	{
-		buf[i] = ft_strdup(line);
-		free(line);
-		i++;
-	}
-	if (check == 0)
-	{
-		free_buf(buf, i - 1);
-		return (NULL);
+		while (i < 4 && (check = get_next_line(fd, &line)))
+		{
+			buf[i] = ft_strdup(line);
+			free(line);
+			i++;
+		}
+		if (check == 0)
+		{
+			free_buf(buf, i - 1);
+			return (NULL);
+		}
 	}
 	return (buf);
 }
@@ -111,14 +115,15 @@ int		main(int ac, char **av)
 			i = 0;
 			while (i < 4)
 			{
-				printf("|%s|\n", a->figs[i]);
+				ft_putstr(a->figs[i]);
+				ft_putstr("\n");
 				i++;
 			}
-			printf("\n");
+			ft_putstr("\n");
 			a = a->next;
 		}
 	} 
 	else
-		printf("error\n");
+		ft_putstr("error\n");
 	return (0);
 }
