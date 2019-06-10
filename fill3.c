@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/03 20:30:15 by bomanyte         ###   ########.fr       */
+/*   Updated: 2019/06/10 17:35:44 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "fillit.h"
 
-typedef struct m_list
-{
-    char sym;
-    char **figs;
-    int offset_x;
-    int offset_y;
-    char **map;
-    struct m_list *next;
-    struct m_list *previous;
-}               map;
 
 void    *ft_memalloc(size_t size)
 {
