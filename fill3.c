@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/03 20:30:15 by bomanyte         ###   ########.fr       */
+/*   Updated: 2019/06/10 19:12:44 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+// sym - буква алфавита
+// figs - двумерный массив для одной фигуры
+// ints - сдвиг по х и у
+// map - двумерный массив для карты
 typedef struct m_list
 {
     char sym;
@@ -89,6 +93,7 @@ char    *ft_strdup(const char *s1)
     return (ptr - sz);
 }
 
+//нахождение корня.
 int		ft_sqrt(int nb)
 {
     int i;
@@ -107,6 +112,7 @@ int		ft_sqrt(int nb)
     }
 }
 
+//удаление двумерного массива.
 void	*ft_arrmemdel(void **ap)
 {
     unsigned char	**ptr;
@@ -127,6 +133,7 @@ void	*ft_arrmemdel(void **ap)
     return (NULL);
 }
 
+//копирование двумерного массива.
 char **ft_arrcopy(char **arr)
 {
     int i;
@@ -147,6 +154,7 @@ char **ft_arrcopy(char **arr)
     return (new);
 }
 
+//удаление одного элемента списка.
 void	ft_lstdelone(map **alst)
 {
     map *head;
@@ -154,11 +162,14 @@ void	ft_lstdelone(map **alst)
     head = *alst;
     if (!alst)
         return ;
-    ft_arrmemdel((void **)head->map);
+    if (head->map)
+		ft_arrmemdel((void **)head->map);
+	ft_arrmemdel((void **)head->figs);
     free(head);
     head = NULL;
 }
 
+//здесь должен быть вывод содержимого готовой карты.
 void    ft_printlst(map *valid) {
 
     printf("\n%s\n", valid->map[0]);
@@ -173,6 +184,8 @@ void    ft_printlst(map *valid) {
     printf("%s\n", valid->map[9]);
 }
 
+//уже для готового результата - очистить предыдущие аллокации памяти, предыдущие элементы списка и массивы,
+//оставить только нужный (последний элемент) списка. в конце вызываем функцию, которая выводит содержимое.
 void    ft_remove(map *alst)
 {
     map *head;
@@ -200,40 +213,7 @@ void    ft_remove(map *alst)
     ft_printlst(valid);
 }
 
-/*void    ft_clean(map *alst)
-{
-    map *head;
-
-    while (alst)
-    {
-        head = alst;
-        alst = alst->previous;
-        //del(head->content, head->content_size);
-        if (head->map)
-           ft_arrmemdel((void **)head->map);
-    }
-    head = NULL;
-}*/
-
-/* map    *ft_clean(map **alst)
-{
-    map *head;
-    map *valid;
-
-    valid = *alst;
-    *alst = (*alst)->next;
-    while (alst && *alst)
-    {
-        head = *alst;
-        *alst = (*alst)->next;
-        //del(head->content, head->content_size);
-        ft_arrmemdel((void **)head->map);
-        free(head);
-    }
-    head = NULL;
-    return (valid);
-} */
-
+//создать карту с нуля и присвоить ее первому элементу списка.
 void  ft_getmap(int size, map *lst) {
     char **map;
     int i;
@@ -255,6 +235,7 @@ void  ft_getmap(int size, map *lst) {
     lst->map = map;
 }
 
+//найтт координаты след решетки по х.
 int find_x(char **fig, int num)
 {
     static int x = 0;
@@ -289,6 +270,7 @@ int find_x(char **fig, int num)
     return (x1 - temp);
 }
 
+//найти координаты след решетки по у.
 int find_y(char **fig, int num)
 {
     static int y = 0;
@@ -319,6 +301,7 @@ int find_y(char **fig, int num)
     return (y1 - temp);
 }
 
+//функция для обновления данных по сдвигу. для сокращения кол-ва строк отдельно.
 void    ft_set(map *map, int x, int y)
 {
     if (!map->previous) {
@@ -333,6 +316,7 @@ void    ft_set(map *map, int x, int y)
 
 }
 
+//для микрооптимизации - посчитать сколько осталось фигур дальше.
 size_t	ft_lstsize(map *begin_lst)
 {
     size_t i;
@@ -346,6 +330,9 @@ size_t	ft_lstsize(map *begin_lst)
     return (i);
 }
 
+//микро-оптимизация - прежде чем начать подставлять следующие фигуры, мы проверим, хватит ли количества свободных точек на 
+//все следующие фигуры.
+//скорее всего вообще не нужна.
 int     ft_dotstate(map *map, int num)
 {
     int x;
@@ -380,6 +367,7 @@ int     ft_dotstate(map *map, int num)
     return (0);
 }
 
+//увеличить значение сдвига по х, если значение сдвига по у у нас уже дошло до терминального 0 (кол-во строк).
 void    ft_updtxy(map *map, int num)
 {
     if (map->offset_y >= num)
@@ -389,12 +377,17 @@ void    ft_updtxy(map *map, int num)
     }
 }
 
+//создать карту с нуля
 void    ft_updtmap(map *map, int num)
 {
     ft_arrmemdel((void **) map->map);
     ft_getmap(num, map);
 }
 
+//подстановка. обновляем данные, если уже был сдвиг. ставим туда первую решетку. затем ищем координаты следующей.
+//если подстановка не прошла - рекурсивно запускаем на шаг вперед. 
+//если дошли до конца - удаляем карту, обновляем сдвиг на ноль и возвращаем ноль, чтобы в филлит вернуться на предыдущую фигуру.
+//если подстановка получилась, на выходе уже увеличиваем сдвиг фигуры заранее.
 int  subst(map *map, int num)
 {
     int y;
@@ -441,6 +434,12 @@ int  subst(map *map, int num)
     return (1);
 }
 
+//манипуляция данными. смотрим что вернула подстановка, на основе этого либо отправляяем следующий элемент
+//списка со следующей фигурой, либо смотрим, можно ли сделать сдвиг предыдущий фигуры и есть ли она вообще.
+//если есть, то делаем шаг назад. если можно скопировать предыдущую карту - делаем это. если нет - создаем новую.
+//увеличиваем сдвиг и снова запускаем подстановку.
+//если мы вернулись к первой фигуре, проверяем можно ли сделать сдвиг. создаем новую карту и снова подстановка.
+//если мы на первой фигуре и сдвиг уже нельзя сделать, выходим и увеличиваем карту.
 int fillit(map *map, int num) {
     printf("num is %d\n", num);
     while (map) {
@@ -474,6 +473,7 @@ int fillit(map *map, int num) {
     }
 }
 
+//копируем из массива со всеми фигурами нужную фигуру и разрезаем ее по х и у. 
 void    ft_splitfigs(map *lst, char **arr, int n)
 {
     char **arr2;
@@ -509,6 +509,8 @@ void    ft_splitfigs(map *lst, char **arr, int n)
     lst->figs = arr2;
 }
 
+//присваиваем каждому элементу списка двумерный массив со своей фигурой, предварительно скопировав фигуру из 
+//двумерного массива со всеми фигурами и разрезав ее на х и у в вызываемой функции.
 void    ft_setfigs(map *map, char **arr, int num)
 {
     int i;
@@ -523,6 +525,7 @@ void    ft_setfigs(map *map, char **arr, int num)
     ft_arrmemdel((void **)arr);
 }
 
+//создаем список, ориентируясь на количество фигур. все данные пока нуль кроме символа для заполнения.
 map *ft_mklst2(int num)
 {
     map *head;
@@ -550,6 +553,7 @@ map *ft_mklst2(int num)
     return (start);
 }
 
+//делим буфер на фигуры - один двумерный массив. в каждой строчке - вся фигура. 1 этап разделения.
 char **ft_seprt(char *str, int num)
 {
     int i;
@@ -582,6 +586,7 @@ char **ft_seprt(char *str, int num)
     return (arr);
 }
 
+//считаем сколько горизонтальных палочек для оптимизации
 int ft_get_type1(map *map, int num)
 {
     int i;
@@ -617,6 +622,7 @@ int ft_get_type1(map *map, int num)
     return (type);
 }
 
+//считаем сколько вертикальных палочек для оптимизации
 int ft_get_type2(map *map, int num)
 {
     int i;
@@ -652,6 +658,10 @@ int ft_get_type2(map *map, int num)
     return (type);
 }
 
+//для оптимизации по вертикальным и горизонтальным "####". смотрим сколько у нас вертикальных и горизонтальных. тип 3 - это
+//все остальные фигуры. если у нас только тип 2 и тип 1, то вернем большее количество (если 5 вертикальных фигур, нам нужна
+//карта минимум 5 на 5).
+//если есть еще и другие типы фигур вместе с типами 2 и 1, мы карту увеличиваем еще на 1.
 int ft_count_type(map *map, int num)
 {
     int type_1;
@@ -675,6 +685,7 @@ int ft_count_type(map *map, int num)
     return (0);
 }
 
+//определяем, является ли фигура квадратом. для оптимизации
 int is_sqr2(map *map, int num, int x, int y)
 {
     int i;
@@ -696,6 +707,7 @@ int is_sqr2(map *map, int num, int x, int y)
     return (0);
 }
 
+//четная ли разница (для формулы оптимизации)
 int is_even(int ret)
 {
     if (ret % 2 == 0)
@@ -703,6 +715,10 @@ int is_even(int ret)
     return (0);
 }
 
+//оптимизация для квадратов. обработка - ищем квадраты на входе, считаем их кол-во. сразу здесь расчитываем классической формулой 
+//по квадрату оптимальный размер доски. потом сравниваем результат с результатом нашей формулы для оптимизации для квадратов -
+//если наша формула дала больший результат, мы заменяем его на больший.
+//формула для квадратов - четная ли разница произведения длины на ширину карты и произведения количества квадратов на 4 
 int is_sqr(map *map, int ret)
 {
     int ret2;
@@ -738,6 +754,7 @@ int is_sqr(map *map, int ret)
     return (ret);
 }
 
+//найти количество фигур
 int ft_get_fignum(char *s)
 {
     int n;
@@ -752,6 +769,11 @@ int ft_get_fignum(char *s)
     return (n);
 }
 
+//считываем файл, разбиваем его на двумерный массив (в одной строке вся фигура)
+//затем считываем сколько у нас фигур, создаем фиксированный двусвязный список, разбиваем каждую фигуру на отдельный
+//двумерный массив. двумерные массивы с фигурами запихиваем в каждую ячейку списка.
+//оптимизация - расчет размеров доски. затем создаем первоначальную карту и запихиваем ее в первый элемент списка.
+//вызываем филлит. если вернул ноль - делаем новую мапу побольше, в самой функции присваиваем ее первому элементу списка. 
 int main(int argc, char **argv) {
 
     char buf[1000 + 1];
