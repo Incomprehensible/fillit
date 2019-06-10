@@ -6,11 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/06/10 17:35:44 by crycherd         ###   ########.fr       */
-=======
-/*   Updated: 2019/06/10 19:12:44 by bomanyte         ###   ########.fr       */
->>>>>>> e9d6949eac332fd04656d2007f066be203ebce6a
+/*   Updated: 2019/06/10 21:42:45 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +16,6 @@
 #include <unistd.h>
 #include "fillit.h"
 
-<<<<<<< HEAD
-=======
 // sym - буква алфавита
 // figs - двумерный массив для одной фигуры
 // ints - сдвиг по х и у
@@ -36,7 +30,6 @@ typedef struct m_list
     struct m_list *next;
     struct m_list *previous;
 }               map;
->>>>>>> e9d6949eac332fd04656d2007f066be203ebce6a
 
 void    *ft_memalloc(size_t size)
 {
