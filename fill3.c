@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "fillit.h"
+#include "libft.h"
 
 // sym - буква алфавита
 // figs - двумерный массив для одной фигуры
@@ -146,7 +147,7 @@ char **ft_arrcopy(char **arr)
 }
 
 //удаление одного элемента списка.
-void	ft_lstdelone(map **alst)
+void	ft_lstdel_one(map **alst)
 {
     map *head;
 
@@ -186,14 +187,14 @@ void    ft_remove(map *alst)
     while (alst)
     {
         head = alst;
-        ft_lstdelone(&head);
+        ft_lstdel_one(&head);
         alst = alst->previous;
     }
     if (valid->next) {
         further = valid->next;
         while (further)
         {
-            ft_lstdelone(&further);
+            ft_lstdel_one(&further);
             further = further->next;
         }
     }
@@ -430,6 +431,7 @@ int  subst(map *map, int num)
 //если мы вернулись к первой фигуре, проверяем можно ли сделать сдвиг. создаем новую карту и снова подстановка.
 //если мы на первой фигуре и сдвиг уже нельзя сделать, выходим и увеличиваем карту.
 int fillit(map *map, int num) {
+    
     while (map) {
         if (subst(map, num) != 0) {
             if (map->next && map->next->figs) {
@@ -633,10 +635,7 @@ int is_sqr(map *map, int ret)
 //вызываем филлит. если вернул ноль - делаем новую мапу побольше, в самой функции присваиваем ее первому элементу списка. 
 int main(int argc, char **argv) {
 
-    char buf[1000 + 1];
     int ret;
-    int fd;
-    char **figs;
     map *field;
     int rows;
 
