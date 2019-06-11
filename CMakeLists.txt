@@ -16,4 +16,4 @@ add_executable(tryfillit
         get_next_line.h
         libft.a
         libft.h
-        main.c)
+        )

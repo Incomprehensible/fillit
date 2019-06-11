@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/11 15:26:27 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:08:27 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	ft_lstdel_one(map **alst)
         return ;
     if (head->map)
 		ft_arrmemdel((void **)head->map);
-	ft_arrmemdel((void **)head->figs);
+	free_buf(head->figs, 4);
     free(head);
     head = NULL;
 }
@@ -190,14 +190,14 @@ void    ft_remove(map *alst)
         ft_lstdel_one(&head);
         alst = alst->previous;
     }
-    if (valid->next) {
+/*    if (valid->next) {
         further = valid->next;
         while (further)
         {
             ft_lstdel_one(&further);
             further = further->next;
         }
-    }
+    }*/
     valid->previous = NULL;
     head = NULL;
     ft_printlst(valid);
@@ -364,17 +364,40 @@ void    ft_updtmap(map *map, int num)
 //если подстановка не прошла - рекурсивно запускаем на шаг вперед. 
 //если дошли до конца - удаляем карту, обновляем сдвиг на ноль и возвращаем ноль, чтобы в филлит вернуться на предыдущую фигуру.
 //если подстановка получилась, на выходе уже увеличиваем сдвиг фигуры заранее.
+
+int ft_find(map *map, int flag, int num)
+{
+    int x;
+    int y;
+
+    ft_updtxy(map, num);
+    x = map->offset_x;
+    y = map->offset_y;
+    if (num == 0) {
+        while (map->map[x] && map->map[x][y] != '.') {
+            while (map->map[x][y] && map->map[x][y] != '.')
+                y++;
+            x++;
+            y = 0;
+        }
+        //if (!map->map[x])
+            //return (0);
+    }
+    if (flag == 1)
+        return (x);
+    else
+        return (y);
+}
+
 int  subst(map *map, int num)
 {
     int y;
     int x;
     int flag;
 
-    if (!ft_dotstate(map, num))
-        return (0);
-    ft_updtxy(map, num);
-    x = map->offset_x;
-    y = map->offset_y;
+
+    x = ft_find(map, 1, num);
+    y = ft_find(map, 2, num);
     flag = 0;
     while (flag < 4)
     {
@@ -401,7 +424,7 @@ int  subst(map *map, int num)
         printf("%s\n", map->map[1]);
         printf("%s\n", map->map[2]);
         printf("%s\n", map->map[3]);
-         printf("%s\n\n", map->map[4]);
+        printf("%s\n\n", map->map[4]);
         //printf("%s\n", map->map[5]);
         //printf("%s\n", map->map[6]);
         flag++;
@@ -416,8 +439,39 @@ int  subst(map *map, int num)
 //увеличиваем сдвиг и снова запускаем подстановку.
 //если мы вернулись к первой фигуре, проверяем можно ли сделать сдвиг. создаем новую карту и снова подстановка.
 //если мы на первой фигуре и сдвиг уже нельзя сделать, выходим и увеличиваем карту.
-int fillit(map *map, int num) {
-    
+
+int ft_check_offset(map *map, int num, int flag)
+{
+    if (flag == 1) {
+        if (map->offset_x > num - 1 || (map->offset_x >= num - 1 && map->offset_y >= num - 3))
+            return (0);
+        return (1);
+    }
+    else
+    {
+        if (map->previous->offset_x > num - 1 ||
+        (map->previous->offset_x >= num - 1 && map->previous->offset_y >= num - 3))
+        {
+            ft_set(map->previous, 0, 0);
+            ft_arrmemdel((void **) map->previous->map);
+            return (0);
+        }
+        return (1);
+
+    }
+
+}
+
+void ft_check_map(map *map, int num)
+{
+    if (!map->previous)
+        ft_updtmap(map, num);
+    else
+        map->map = ft_arrcopy(map->previous->map);
+}
+
+int fillit(map *map, int num)
+{
     while (map) {
         if (subst(map, num) != 0) {
             if (map->next && map->next->figs) {
@@ -427,24 +481,15 @@ int fillit(map *map, int num) {
                 return (1);
             }
             map->map = ft_arrcopy(map->previous->map);
-        } else {
-            if (!map->previous && map->offset_x >= num - 1)
+        } else
+        {
+            if (!map->previous && !ft_check_offset(map, num, 1))
                 return (0);
-            if (map->previous->offset_x >= num - 1 && map->previous->offset_y >= num - 1) {
-                ft_set(map->previous, 0, 0);
-                ft_arrmemdel((void **) map->previous->map);
+            if (!ft_check_offset(map, num, 2))
                 map = map->previous->previous;
-                if (!map->previous)
-                    ft_updtmap(map, num);
-                else
-                    map->map = ft_arrcopy(map->previous->map);
-            } else {
+            else
                 map = map->previous;
-                if (!map->previous)
-                    ft_updtmap(map, num);
-                else
-                    map->map = ft_arrcopy(map->previous->map);
-            }
+            ft_check_map(map, num);
         }
     }
     return (1);
@@ -583,6 +628,7 @@ int is_even(int ret)
 //по квадрату оптимальный размер доски. потом сравниваем результат с результатом нашей формулы для оптимизации для квадратов -
 //если наша формула дала больший результат, мы заменяем его на больший.
 //формула для квадратов - четная ли разница произведения длины на ширину карты и произведения количества квадратов на 4 
+
 int is_sqr(map *map, int ret)
 {
     int ret2;
@@ -605,7 +651,7 @@ int is_sqr(map *map, int ret)
         ret2 += is_sqr2(map, ret, x, y);
         map = map->next;
     }
-    if (ret2 > ret/2)
+    if (ret2 == ret || ret2 > ret - 2)
     {
         ret = ft_sqrt(ret * 4);
         if (!(is_even((ret * ret) - (ret2 * 4))))

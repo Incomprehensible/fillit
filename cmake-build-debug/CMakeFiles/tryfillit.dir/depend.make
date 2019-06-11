@@ -18,8 +18,3 @@ CMakeFiles/tryfillit.dir/get_next_line.c.o: ../get_next_line.c
 CMakeFiles/tryfillit.dir/get_next_line.c.o: ../get_next_line.h
 CMakeFiles/tryfillit.dir/get_next_line.c.o: ../libft.h
 
-CMakeFiles/tryfillit.dir/main.c.o: ../fillit.h
-CMakeFiles/tryfillit.dir/main.c.o: ../get_next_line.h
-CMakeFiles/tryfillit.dir/main.c.o: ../libft.h
-CMakeFiles/tryfillit.dir/main.c.o: ../main.c
-
