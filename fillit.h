@@ -25,8 +25,9 @@ typedef struct m_list
     struct m_list *previous;
 }               map;
 
+void	free_buf(char **buf, int i);
+map		*ft_input(char *file_name);
 void	ft_add_to_end_2lst(map **start, map *new);
 map		*ft_new_elem2lst(char **buf);
-void	free_buf(char **buf, int i);
 
 #endif
