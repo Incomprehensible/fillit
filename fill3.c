@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/11 16:27:54 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 21:56:36 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,7 +379,7 @@ int  subst(map *map, int num)
     while (flag < 4)
     {
         if (flag < 4) {
-            x += find_x(map->figs, flag);
+            x = find_x(map->figs, flag);
             y += find_y(map->figs, flag);
         }
         if (x >= num || map->map[x][y] != '.')
@@ -397,13 +397,13 @@ int  subst(map *map, int num)
             return (subst(map, num));
         }
         map->map[x][y] = map->sym;
-        printf("%s\n", map->map[0]);
-        printf("%s\n", map->map[1]);
-        printf("%s\n", map->map[2]);
-        printf("%s\n", map->map[3]);
-         printf("%s\n\n", map->map[4]);
-        //printf("%s\n", map->map[5]);
-        //printf("%s\n", map->map[6]);
+       printf("%s\n", map->map[0]);
+       printf("%s\n", map->map[1]);
+       printf("%s\n", map->map[2]);
+       printf("%s\n", map->map[3]);
+       printf("%s\n\n", map->map[4]);
+       printf("%s\n", map->map[5]);
+       printf("%s\n", map->map[6]);
         flag++;
     }
     map->offset_y++;
