@@ -6,7 +6,7 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 16:10:02 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/11 18:32:36 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 20:21:53 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	check_buf(char **buf)
 	while (i < 4)
 	{
 		j = 0;
-		while (j < 4)
+		while (j < 4 && buf[i][j])
 		{
-			if (buf[i][j]  == '#')
+			if (buf[i][j] == '#')
 				num++;
 			if (buf[i][j] != '.' && buf[i][j] != '#')
 				check = 0;
@@ -40,7 +40,7 @@ int	check_buf(char **buf)
 	return (check);
 }
 
-int check_neighbor(char **buf, int x, int y)
+int	check_neighbor(char **buf, int x, int y)
 {
 	int result;
 
@@ -56,7 +56,7 @@ int check_neighbor(char **buf, int x, int y)
 	return (result);
 }
 
-int check_fig(char **buf)
+int	check_fig(char **buf)
 {
 	int check;
 	int neighbors;
