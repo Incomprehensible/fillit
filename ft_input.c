@@ -6,7 +6,7 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:34:27 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/11 15:17:12 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:24:22 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,7 @@ void	free_buf(char **buf, int i)
 	free(buf);
 }
 
-void	check_buf(char **buf)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		ft_putstr("|");
-		ft_putstr(buf[i]);
-		ft_putstr("|");
-		ft_putstr("\n");
-		i++;
-	}
-	ft_putstr("\n");
-}
-
-char	**fill_buf(int fd)
+static char	**fill_buf(int fd)
 {
 	int i;
 	int check;
@@ -66,7 +50,7 @@ char	**fill_buf(int fd)
 	return (buf);
 }
 
-int		check_end(fd)
+static int		check_end(fd)
 {
 	char *line;
 	int check;
@@ -100,34 +84,4 @@ map		*ft_input(char *file_name)
 	}
 	close(fd);
 	return (list);
-}
-
-int		main(int ac, char **av)
-{
-	map *a;
-	int i;
-	int size;
-
-	a = ft_input(av[1]);
-	size = ft_lstsize(a);
-	if (a)
-	{
-		while (a)
-		{
-			i = 0;
-			ft_putchar(a->sym);
-			ft_putstr("\n");
-			while (i < 4)
-			{
-				ft_putstr(a->figs[i]);
-				ft_putstr("\n");
-				i++;
-			}
-			ft_putstr("\n");
-			a = a->next;
-		}
-	} 
-	else
-		ft_putstr("error\n");
-	return (0);
 }

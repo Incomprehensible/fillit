@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/10 21:42:45 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:04:14 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@
 // figs - двумерный массив для одной фигуры
 // ints - сдвиг по х и у
 // map - двумерный массив для карты
-typedef struct m_list
-{
-    char sym;
-    char **figs;
-    int offset_x;
-    int offset_y;
-    char **map;
-    struct m_list *next;
-    struct m_list *previous;
-}               map;
 
 void    *ft_memalloc(size_t size)
 {
@@ -172,17 +162,15 @@ void	ft_lstdelone(map **alst)
 
 //здесь должен быть вывод содержимого готовой карты.
 void    ft_printlst(map *valid) {
+    int i;
 
-    printf("\n%s\n", valid->map[0]);
-    printf("%s\n", valid->map[1]);
-    printf("%s\n", valid->map[2]);
-    printf("%s\n", valid->map[3]);
-    printf("%s\n", valid->map[4]);
-    printf("%s\n", valid->map[5]);
- printf("%s\n", valid->map[6]);
-    printf("%s\n", valid->map[7]);
-    printf("%s\n", valid->map[8]);
-    printf("%s\n", valid->map[9]);
+    i = 0;
+    while (valid->map[i])
+    {
+        ft_putstr(valid->map[i]);
+        ft_putchar('\n');
+        i++;
+    }
 }
 
 //уже для готового результата - очистить предыдущие аллокации памяти, предыдущие элементы списка и массивы,
@@ -442,7 +430,6 @@ int  subst(map *map, int num)
 //если мы вернулись к первой фигуре, проверяем можно ли сделать сдвиг. создаем новую карту и снова подстановка.
 //если мы на первой фигуре и сдвиг уже нельзя сделать, выходим и увеличиваем карту.
 int fillit(map *map, int num) {
-    printf("num is %d\n", num);
     while (map) {
         if (subst(map, num) != 0) {
             if (map->next && map->next->figs) {
@@ -472,119 +459,6 @@ int fillit(map *map, int num) {
             }
         }
     }
-}
-
-//копируем из массива со всеми фигурами нужную фигуру и разрезаем ее по х и у. 
-void    ft_splitfigs(map *lst, char **arr, int n)
-{
-    char **arr2;
-    int i;
-    int offset;
-    int j;
-    int m;
-
-    i = 0;
-    offset = 0;
-    j = 0;
-    m = 0;
-    arr2 = (char **)malloc(sizeof(arr2) * 5);
-    while (arr[0][i] != '\n') {
-        offset++;
-        i++;
-    }
-    i = 0;
-    arr2[4] = NULL;
-    while (i != 4)
-    {
-        arr2[i] = (char *)ft_memalloc(offset);
-        while (arr2[i] && arr2[i][m - 1] != '\n' && m <= offset)
-        {
-            arr2[i][m] = arr[n][j];
-            m++;
-            j++;
-        }
-        arr2[i][m - 1] = '\0';
-        i++;
-        m = 0;
-    }
-    lst->figs = arr2;
-}
-
-//присваиваем каждому элементу списка двумерный массив со своей фигурой, предварительно скопировав фигуру из 
-//двумерного массива со всеми фигурами и разрезав ее на х и у в вызываемой функции.
-void    ft_setfigs(map *map, char **arr, int num)
-{
-    int i;
-
-    i = 0;
-    ft_splitfigs(map, arr, i++);
-    while (--num) {
-        map = map->next;
-        ft_splitfigs(map, arr, i);
-        i++;
-    }
-    ft_arrmemdel((void **)arr);
-}
-
-//создаем список, ориентируясь на количество фигур. все данные пока нуль кроме символа для заполнения.
-map *ft_mklst2(int num)
-{
-    map *head;
-    map *start;
-    map *prev;
-
-    head = (map *)malloc(sizeof(map));
-    start = head;
-    prev = head;
-    head->map = 0;
-    head->sym = 'A';
-    ft_set(head, 0, 0);
-    head->previous = NULL;
-    head->next = NULL;
-    while (--num) {
-        head->next = (map *)malloc(sizeof(map));
-        head->next->next = NULL;
-        head = head->next;
-        head->map = 0;
-        ft_set(head, 0, 0);
-        head->previous = prev;
-        head->sym = head->previous->sym + 1;
-        prev = head;
-    }
-    return (start);
-}
-
-//делим буфер на фигуры - один двумерный массив. в каждой строчке - вся фигура. 1 этап разделения.
-char **ft_seprt(char *str, int num)
-{
-    int i;
-    int j;
-    int n;
-    char **arr;
-
-    n = 0;
-    i = 0;
-    j = 0;
-    while (str[j] != '\n')
-        j++;
-    arr = (char **)ft_memalloc(sizeof(arr) * (num + 1));
-    while (n < num)
-    {
-        if (!arr[n])
-            arr[n] = (char *)ft_memalloc((j + 1) * 4);
-        arr[n][i] = *str;
-        if ((*str == '\n' && *(str + 1) == '\n') || *str == '\0')
-        {
-            arr[n][i] = '\0';
-            n++;
-            i = 0;
-            str++;
-        }
-        else
-            i++;
-        str++;
-    }
-    return (arr);
 }
 
 //считаем сколько горизонтальных палочек для оптимизации
@@ -742,32 +616,14 @@ int is_sqr(map *map, int ret)
         ret2 += is_sqr2(map, ret, x, y);
         map = map->next;
     }
-    //if (ret2 != ret)
-        //return (ft_sqrt(ret * 4));
-    //ret2 = ft_sqrt(ret * 4);
-    //if (!(is_even((ret2 * ret2) - (ret * 4))))
-        //++ret2;
-    ret = ft_sqrt(ret * 4);
-    if (ret2) {
-        if (!(is_even((ret * ret) - (ret2 * 4))))
-            ++ret;
-    }
-    return (ret);
-}
-
-//найти количество фигур
-int ft_get_fignum(char *s)
-{
-    int n;
-
-    n = 0;
-    while (*s)
+    if (ret2 > ret/2)
     {
-        if ((*s == '\n' && *(s + 1) == '\n') || *(s + 1) == '\0')
-            n++;
-        s++;
+        ret = ft_sqrt(ret * 4);
+        if (!(is_even((ret * ret) - (ret2 * 4))))
+            return(++ret);
+        return (ret);
     }
-    return (n);
+    return (ft_sqrt(ret * 4));
 }
 
 //считываем файл, разбиваем его на двумерный массив (в одной строке вся фигура)
@@ -781,17 +637,11 @@ int main(int argc, char **argv) {
     int ret;
     int fd;
     char **figs;
-    char *ex = "/Users/bomanyte/tryfillit/ex";
     map *field;
     int rows;
 
-    fd = open(ex, O_RDONLY);
-    while ((ret = read(fd, buf, 1000)) > 0)
-        buf[ret] = '\0';
-    ret = ft_get_fignum(buf);
-    figs = ft_seprt(buf, ret);
-    field = ft_mklst2(ret);
-    ft_setfigs(field, figs, ret);
+    field = ft_input(argv[1]);
+    ret = ft_lstsize(field);
     rows = is_sqr(field, ret);
     ret = ft_count_type(field, ret);
     if (rows < ret)
