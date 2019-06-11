@@ -6,13 +6,15 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:34:56 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/10 19:39:21 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:19:32 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef FILLIT_H
 # define FILLIT_H
+
+# include "libft.h"
 
 typedef struct m_list
 {
@@ -28,5 +30,6 @@ typedef struct m_list
 void	ft_add_to_end_2lst(map **start, map *new);
 map		*ft_new_elem2lst(char **buf);
 void	free_buf(char **buf, int i);
+size_t	ft_lstsize(map *begin_lst);
 
 #endif

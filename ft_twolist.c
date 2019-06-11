@@ -6,12 +6,25 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 19:05:59 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/10 19:49:46 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:19:42 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
+
+size_t	ft_lstsize(map *begin_lst)
+{
+    size_t i;
+
+    i = 0;
+    while (begin_lst)
+    {
+		begin_lst->sym += i;
+        begin_lst = begin_lst->next;
+        i++;
+    }
+    return (i);
+}
 
 void	ft_add_to_end_2lst(map **start, map *new)
 {
