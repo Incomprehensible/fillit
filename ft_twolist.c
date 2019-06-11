@@ -6,7 +6,7 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 19:05:59 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/11 15:19:42 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 18:13:00 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,23 @@ size_t	ft_lstsize(map *begin_lst)
         i++;
     }
     return (i);
+}
+
+void	ft_lst_del(map **start)
+{
+	map *del;
+
+	if (*start)
+	{
+		del = *start;
+		if (del)
+		{
+			ft_lst_del(&(del->next));
+			free_buf(del->figs, 3);
+			free(del);
+		}
+		*start = NULL;
+	}
 }
 
 void	ft_add_to_end_2lst(map **start, map *new)

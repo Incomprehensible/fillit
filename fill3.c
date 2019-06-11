@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/11 15:57:57 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:27:54 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	ft_lstdel_one(map **alst)
         return ;
     if (head->map)
 		ft_arrmemdel((void **)head->map);
-	free_buf(head->figs, 4);
+	free_buf(head->figs, 3);
     free(head);
     head = NULL;
 }

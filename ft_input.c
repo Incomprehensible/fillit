@@ -6,7 +6,7 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:34:27 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/11 15:24:22 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 18:48:05 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 
 void	free_buf(char **buf, int i)
 {
-	while (i >= 0)
+	if (buf)
 	{
-		free(buf[i]);
-		i--;
+		while (i >= 0)
+		{
+			free(buf[i]);
+			i--;
+		}
+		free(buf);
 	}
-	free(buf);
 }
 
 static char	**fill_buf(int fd)
@@ -75,12 +78,14 @@ map		*ft_input(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	while (check)
 	{
-		if (!(buf = fill_buf(fd)))
+		if (!(buf = fill_buf(fd)) || ((check = check_end(fd)) == 2) || !(check_fig(buf)))
+		{
+			ft_lst_del(&list);
+			free_buf(buf, 3);
 			return (NULL);
+		}
 		ft_add_to_end_2lst(&list, ft_new_elem2lst(buf));
 		free_buf(buf, 3);
-		if ((check = check_end(fd)) == 2)
-			return (NULL);
 	}
 	close(fd);
 	return (list);
