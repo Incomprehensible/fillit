@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/11 15:26:27 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:57:57 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	ft_lstdel_one(map **alst)
         return ;
     if (head->map)
 		ft_arrmemdel((void **)head->map);
-	ft_arrmemdel((void **)head->figs);
+	free_buf(head->figs, 4);
     free(head);
     head = NULL;
 }
@@ -190,14 +190,14 @@ void    ft_remove(map *alst)
         ft_lstdel_one(&head);
         alst = alst->previous;
     }
-    if (valid->next) {
+/*    if (valid->next) {
         further = valid->next;
         while (further)
         {
             ft_lstdel_one(&further);
             further = further->next;
         }
-    }
+    }*/
     valid->previous = NULL;
     head = NULL;
     ft_printlst(valid);
@@ -370,8 +370,8 @@ int  subst(map *map, int num)
     int x;
     int flag;
 
-    if (!ft_dotstate(map, num))
-        return (0);
+//    if (!ft_dotstate(map, num))
+//        return (0);
     ft_updtxy(map, num);
     x = map->offset_x;
     y = map->offset_y;
@@ -416,8 +416,8 @@ int  subst(map *map, int num)
 //увеличиваем сдвиг и снова запускаем подстановку.
 //если мы вернулись к первой фигуре, проверяем можно ли сделать сдвиг. создаем новую карту и снова подстановка.
 //если мы на первой фигуре и сдвиг уже нельзя сделать, выходим и увеличиваем карту.
-int fillit(map *map, int num) {
-    
+int fillit(map *map, int num)
+{    
     while (map) {
         if (subst(map, num) != 0) {
             if (map->next && map->next->figs) {
@@ -447,7 +447,9 @@ int fillit(map *map, int num) {
             }
         }
     }
+	return (1);
 }
+
 
 //считаем сколько горизонтальных палочек для оптимизации
 int ft_get_type1(map *map, int num)
