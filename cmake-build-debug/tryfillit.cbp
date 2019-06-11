@@ -114,6 +114,9 @@
 		<Unit filename="/Users/bomanyte/tryfillit/tryfillit/libft.h">
 			<Option target="tryfillit"/>
 		</Unit>
+		<Unit filename="/Users/bomanyte/tryfillit/tryfillit/main.c">
+			<Option target="tryfillit"/>
+		</Unit>
 		<Unit filename="/Users/bomanyte/tryfillit/tryfillit/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

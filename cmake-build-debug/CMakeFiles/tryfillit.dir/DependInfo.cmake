@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/Users/bomanyte/tryfillit/tryfillit/ft_input.c" "/Users/bomanyte/tryfillit/tryfillit/cmake-build-debug/CMakeFiles/tryfillit.dir/ft_input.c.o"
   "/Users/bomanyte/tryfillit/tryfillit/ft_twolist.c" "/Users/bomanyte/tryfillit/tryfillit/cmake-build-debug/CMakeFiles/tryfillit.dir/ft_twolist.c.o"
   "/Users/bomanyte/tryfillit/tryfillit/get_next_line.c" "/Users/bomanyte/tryfillit/tryfillit/cmake-build-debug/CMakeFiles/tryfillit.dir/get_next_line.c.o"
+  "/Users/bomanyte/tryfillit/tryfillit/main.c" "/Users/bomanyte/tryfillit/tryfillit/cmake-build-debug/CMakeFiles/tryfillit.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

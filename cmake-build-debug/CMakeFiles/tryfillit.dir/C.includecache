@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/bomanyte/tryfillit/tryfillit/fillit.h
+libft.h
+/Users/bomanyte/tryfillit/tryfillit/libft.h
+
+/Users/bomanyte/tryfillit/tryfillit/get_next_line.h
+unistd.h
+-
+stdlib.h
+-
+stdio.h
+-
+
+/Users/bomanyte/tryfillit/tryfillit/libft.h
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+
+/Users/bomanyte/tryfillit/tryfillit/main.c
+get_next_line.h
+/Users/bomanyte/tryfillit/tryfillit/get_next_line.h
+fillit.h
+/Users/bomanyte/tryfillit/tryfillit/fillit.h
+

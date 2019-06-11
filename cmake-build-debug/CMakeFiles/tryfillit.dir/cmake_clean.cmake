@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/tryfillit.dir/ft_input.c.o"
   "CMakeFiles/tryfillit.dir/ft_twolist.c.o"
   "CMakeFiles/tryfillit.dir/get_next_line.c.o"
+  "CMakeFiles/tryfillit.dir/main.c.o"
   "tryfillit.pdb"
   "tryfillit"
 )
