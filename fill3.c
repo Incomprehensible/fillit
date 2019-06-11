@@ -651,7 +651,7 @@ int is_sqr(map *map, int ret)
         ret2 += is_sqr2(map, ret, x, y);
         map = map->next;
     }
-    if (ret2 == ret || ret2 > ret - 2)
+    if (ret2 == ret || ret2 >= ret - 2)
     {
         ret = ft_sqrt(ret * 4);
         if (!(is_even((ret * ret) - (ret2 * 4))))
