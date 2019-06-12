@@ -6,60 +6,12 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/12 19:22:33 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/12 22:23:27 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include "fillit.h"
 #include "libft.h"
-
-// sym - буква алфавита
-// figs - двумерный массив для одной фигуры
-// ints - сдвиг по х и у
-// map - двумерный массив для карты
-
-void    *ft_memalloc(size_t size)
-{
-    int                i;
-    unsigned char    *ptr;
-
-    i = 0;
-    if (!(ptr = malloc(size)))
-        return (0);
-    while (size--)
-    {
-        *ptr++ = '\0';
-        i++;
-    }
-    return (ptr - i);
-}
-
-void    ft_memdel(void **ap)
-{
-    if (ap)
-        free(*ap);
-    *ap = NULL;
-}
-
-char    *ft_strnew(size_t size)
-{
-    int        i;
-    char    *str;
-
-    i = 0;
-    if (size == (size_t)-1)
-        return (0);
-    if (!(str = (char*)malloc(size + 1)))
-        return (0);
-    str[size] = '\0';
-    while (size-- && (i = i + 1))
-        *str++ = '\0';
-    return (str - i);
-}
 
 void    ft_strdel(char **as)
 {
@@ -68,21 +20,6 @@ void    ft_strdel(char **as)
         ft_memdel((void **)as);
         as = NULL;
     }
-}
-
-char    *ft_strdup(const char *s1)
-{
-    int        sz;
-    char    *ptr;
-
-    sz = 0;
-    while (s1[sz] != '\0')
-        sz++;
-    if (!(ptr = (char *)ft_memalloc(sz + 1)))
-        return (0);
-    while (*s1 != '\0')
-        *ptr++ = *s1++;
-    return (ptr - sz);
 }
 
 //нахождение корня.
@@ -169,9 +106,13 @@ void    ft_printlst(map *valid) {
     while (valid->map[i])
     {
         ft_putstr(valid->map[i]);
+		free(valid->map[i]);
         ft_putchar('\n');
         i++;
     }
+	free(valid->map);
+	free_buf(valid->figs, 3);
+	free(valid);
 }
 
 //уже для готового результата - очистить предыдущие аллокации памяти, предыдущие элементы списка и массивы,

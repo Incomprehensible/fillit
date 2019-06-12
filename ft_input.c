@@ -6,7 +6,7 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:34:27 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/12 19:54:15 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/12 21:54:10 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int		check_end(fd)
 		free(line);
 		return(2);
 	}
+	if (check == 1)
+		free(line);
 	return (check);
 }
 
