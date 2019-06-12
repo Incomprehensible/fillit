@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/12 17:09:37 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/12 19:22:33 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,10 +460,11 @@ int ft_check_offset(map *map, int num, int flag)
 
 void ft_check_map(map *map, int num)
 {
-    if (!map->previous)
-        ft_updtmap(map, num);
-    else
-        map->map = ft_arrcopy(map->previous->map);
+	ft_arrmemdel((void **)map->map);
+	if (!map->previous)
+		ft_getmap(num, map);
+	else
+		map->map = ft_arrcopy(map->previous->map);
 }
 
 int fillit(map *map, int num)
@@ -600,7 +601,7 @@ int is_sqr2(map *map, int x, int y)
         x++;
         y--;
         {
-            while (i != 4 && map->figs[x][y] == '#')
+            while (x < 4 && i != 4 && map->figs[x][y] == '#')
             {
                 y++;
                 i++;
@@ -647,7 +648,6 @@ int is_sqr(map *map, int ret)
         ret2 += is_sqr2(map, x, y);
         map = map->next;
     }
-    if (ret2 == ret || ret2 >= ret - 2)
     {
         ret = ft_sqrt(ret * 4);
         if (!(is_even((ret * ret) - (ret2 * 4))))
