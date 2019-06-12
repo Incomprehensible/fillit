@@ -6,21 +6,12 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/12 22:23:27 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/12 22:31:50 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "libft.h"
-
-void    ft_strdel(char **as)
-{
-    if (as)
-    {
-        ft_memdel((void **)as);
-        as = NULL;
-    }
-}
 
 //нахождение корня.
 int		ft_sqrt(int nb)
