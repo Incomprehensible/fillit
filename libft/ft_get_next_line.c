@@ -6,12 +6,11 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 22:18:16 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/10 16:28:53 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/12 19:48:31 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "get_next_line.h"
 
 static t_list	*what_file(t_list **list, size_t fd)
 {

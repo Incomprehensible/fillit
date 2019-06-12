@@ -6,13 +6,12 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:34:27 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/11 18:48:05 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/12 21:54:10 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "libft.h"
-#include "get_next_line.h"
 #include "fcntl.h"
 
 void	free_buf(char **buf, int i)
@@ -63,6 +62,8 @@ static int		check_end(fd)
 		free(line);
 		return(2);
 	}
+	if (check == 1)
+		free(line);
 	return (check);
 }
 

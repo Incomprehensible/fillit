@@ -6,84 +6,12 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/12 17:09:37 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/12 22:31:50 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include "fillit.h"
 #include "libft.h"
-
-// sym - буква алфавита
-// figs - двумерный массив для одной фигуры
-// ints - сдвиг по х и у
-// map - двумерный массив для карты
-
-void    *ft_memalloc(size_t size)
-{
-    int                i;
-    unsigned char    *ptr;
-
-    i = 0;
-    if (!(ptr = malloc(size)))
-        return (0);
-    while (size--)
-    {
-        *ptr++ = '\0';
-        i++;
-    }
-    return (ptr - i);
-}
-
-void    ft_memdel(void **ap)
-{
-    if (ap)
-        free(*ap);
-    *ap = NULL;
-}
-
-char    *ft_strnew(size_t size)
-{
-    int        i;
-    char    *str;
-
-    i = 0;
-    if (size == (size_t)-1)
-        return (0);
-    if (!(str = (char*)malloc(size + 1)))
-        return (0);
-    str[size] = '\0';
-    while (size-- && (i = i + 1))
-        *str++ = '\0';
-    return (str - i);
-}
-
-void    ft_strdel(char **as)
-{
-    if (as)
-    {
-        ft_memdel((void **)as);
-        as = NULL;
-    }
-}
-
-char    *ft_strdup(const char *s1)
-{
-    int        sz;
-    char    *ptr;
-
-    sz = 0;
-    while (s1[sz] != '\0')
-        sz++;
-    if (!(ptr = (char *)ft_memalloc(sz + 1)))
-        return (0);
-    while (*s1 != '\0')
-        *ptr++ = *s1++;
-    return (ptr - sz);
-}
 
 //нахождение корня.
 int		ft_sqrt(int nb)
@@ -169,9 +97,13 @@ void    ft_printlst(map *valid) {
     while (valid->map[i])
     {
         ft_putstr(valid->map[i]);
+		free(valid->map[i]);
         ft_putchar('\n');
         i++;
     }
+	free(valid->map);
+	free_buf(valid->figs, 3);
+	free(valid);
 }
 
 //уже для готового результата - очистить предыдущие аллокации памяти, предыдущие элементы списка и массивы,
@@ -460,10 +392,11 @@ int ft_check_offset(map *map, int num, int flag)
 
 void ft_check_map(map *map, int num)
 {
-    if (!map->previous)
-        ft_updtmap(map, num);
-    else
-        map->map = ft_arrcopy(map->previous->map);
+	ft_arrmemdel((void **)map->map);
+	if (!map->previous)
+		ft_getmap(num, map);
+	else
+		map->map = ft_arrcopy(map->previous->map);
 }
 
 int fillit(map *map, int num)
@@ -600,7 +533,7 @@ int is_sqr2(map *map, int x, int y)
         x++;
         y--;
         {
-            while (i != 4 && map->figs[x][y] == '#')
+            while (x < 4 && i != 4 && map->figs[x][y] == '#')
             {
                 y++;
                 i++;
@@ -647,7 +580,6 @@ int is_sqr(map *map, int ret)
         ret2 += is_sqr2(map, x, y);
         map = map->next;
     }
-    if (ret2 == ret || ret2 >= ret - 2)
     {
         ret = ft_sqrt(ret * 4);
         if (!(is_even((ret * ret) - (ret2 * 4))))
