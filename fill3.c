@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/12 16:27:55 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/12 16:57:53 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,23 +420,6 @@ int  subst(map *map, int num)
             return (subst(map, num));
         }
         map->map[x][y] = map->sym;
-<<<<<<< HEAD
-       printf("%s\n", map->map[0]);
-       printf("%s\n", map->map[1]);
-       printf("%s\n", map->map[2]);
-       printf("%s\n", map->map[3]);
-       printf("%s\n\n", map->map[4]);
-       printf("%s\n", map->map[5]);
-       printf("%s\n", map->map[6]);
-=======
-        printf("%s\n", map->map[0]);
-        printf("%s\n", map->map[1]);
-        printf("%s\n", map->map[2]);
-        printf("%s\n", map->map[3]);
-        printf("%s\n\n", map->map[4]);
-        //printf("%s\n", map->map[5]);
-        //printf("%s\n", map->map[6]);
->>>>>>> e2ec95893af1a9142309fad56d3ba01594212286
         flag++;
     }
     map->offset_y++;
@@ -676,22 +659,31 @@ int is_sqr(map *map, int ret)
 //двумерный массив. двумерные массивы с фигурами запихиваем в каждую ячейку списка.
 //оптимизация - расчет размеров доски. затем создаем первоначальную карту и запихиваем ее в первый элемент списка.
 //вызываем филлит. если вернул ноль - делаем новую мапу побольше, в самой функции присваиваем ее первому элементу списка. 
-int main(int argc, char **argv) {
-
+int main(int argc, char **argv)
+{
     int ret;
     map *field;
     int rows;
 
-    field = ft_input(argv[1]);
-    ret = ft_lstsize(field);
-    rows = is_sqr(field, ret);
-    ret = ft_count_type(field, ret);
-    if (rows < ret)
-        rows = ret;
-    ft_getmap(rows, field);
-    while (fillit(field, rows) == 0) {
-        ft_set(field, 0, 0);
-        ft_getmap(++rows, field);
-    }
+    if (argc == 2)
+	{
+		if ((field = ft_input(argv[1])))
+		{
+    		ret = ft_lstsize(field);
+    		rows = is_sqr(field, ret);
+    		ret = ft_count_type(field, ret);
+			if (rows < ret)
+				rows = ret;
+			ft_getmap(rows, field);
+			while (fillit(field, rows) == 0) {
+    	    	ft_set(field, 0, 0);
+    	    	ft_getmap(++rows, field);
+    		}
+		}
+		else
+			ft_putstr("error\n");
+	}
+	else
+		ft_putstr("usage: ./fillit target_file\n");
     return 0;
 }
