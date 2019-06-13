@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/13 12:51:47 by bomanyte         ###   ########.fr       */
+/*   Updated: 2019/06/13 13:32:27 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ void	ft_updtxy(t_map *map, int num)
 		map->offset_x++;
 		map->offset_y = 0;
 	}
-}
-
-//maybe unnesessary
-void	ft_updtmap(t_map *map, int num)
-{
-	if (map->map)
-		ft_arrmemdel((void **)map->map);
-	ft_getmap(num, map);
 }
 
 int		subst(t_map *map, int num, int flag)
