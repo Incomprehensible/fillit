@@ -6,12 +6,11 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 23:37:12 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/13 13:07:51 by bomanyte         ###   ########.fr       */
+/*   Updated: 2019/06/13 14:19:16 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
 
 int		main(int argc, char **argv)
 {
@@ -23,7 +22,7 @@ int		main(int argc, char **argv)
 	{
 		if ((field = ft_input(argv[1])))
 		{
-			rows = ft_sqrt(ft_lstsize(field) * 4);
+			rows = ft_sqrt((ft_lstsize(field)) * 4);
 			ret = ft_count_type(field);
 			if (rows < ret)
 				rows = ret;
