@@ -6,7 +6,7 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:29:35 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/13 14:32:29 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/13 15:51:11 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		ft_check_offset(t_map *map, int num, int flag)
 	{
 		if (map->previous && (map->previous->offset_x > num - 1 ||
 					(map->previous->offset_x >= num - 1 &&
-				  map->previous->offset_y >= num - 3)))
+	map->previous->offset_y >= num - 3)))
 		{
 			ft_set(map->previous, 0, 0);
 			ft_arrmemdel((void **)map->previous->map);

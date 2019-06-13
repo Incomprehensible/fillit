@@ -6,7 +6,7 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:34:56 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/13 15:36:23 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/13 15:38:32 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct		s_map
 	char			**figs;
 	int				offset_x;
 	int				offset_y;
-	char			**t_map;
+	char			**map;
 	struct s_map	*next;
 	struct s_map	*previous;
 }					t_map;
