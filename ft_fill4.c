@@ -6,12 +6,11 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 23:40:14 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/13 12:39:31 by bomanyte         ###   ########.fr       */
+/*   Updated: 2019/06/13 14:29:10 by crycherd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
 
 int		ft_remove(t_map *alst)
 {
@@ -37,7 +36,7 @@ void	ft_getmap(int size, t_map *lst)
 	int		i;
 	int		j;
 
-	map = (char **)malloc(sizeof(t_map) * size + 1);
+	map = (char **)malloc(sizeof(char *) * size + 1);
 	map[size] = NULL;
 	i = 0;
 	j = 0;
