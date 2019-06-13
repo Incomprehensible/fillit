@@ -6,12 +6,11 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 23:34:38 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/13 12:59:48 by bomanyte         ###   ########.fr       */
+/*   Updated: 2019/06/13 14:16:29 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
 
 int		fillit(t_map *map, int num)
 {

@@ -6,12 +6,11 @@
 /*   By: bomanyte <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 23:41:27 by bomanyte          #+#    #+#             */
-/*   Updated: 2019/06/13 12:31:06 by bomanyte         ###   ########.fr       */
+/*   Updated: 2019/06/13 14:17:15 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
 
 int		ft_sqrt(int nb)
 {
