@@ -6,13 +6,13 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/11 16:10:02 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/12 17:19:31 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/13 13:15:43 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int	check_buf(char **buf)
+int		check_buf(char **buf)
 {
 	int check;
 	int num;
@@ -40,7 +40,7 @@ int	check_buf(char **buf)
 	return (check);
 }
 
-int	check_neighbor(char **buf, int x, int y)
+int		check_neighbor(char **buf, int x, int y)
 {
 	int result;
 
@@ -56,7 +56,7 @@ int	check_neighbor(char **buf, int x, int y)
 	return (result);
 }
 
-int	check_fig(char **buf)
+int		check_fig(char **buf)
 {
 	int check;
 	int neighbors;

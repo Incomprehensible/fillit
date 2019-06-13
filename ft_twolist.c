@@ -6,29 +6,29 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 19:05:59 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/11 18:13:00 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/13 13:14:36 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-size_t	ft_lstsize(map *begin_lst)
+size_t	ft_lstsize(t_map *begin_lst)
 {
-    size_t i;
+	size_t i;
 
-    i = 0;
-    while (begin_lst)
-    {
+	i = 0;
+	while (begin_lst)
+	{
 		begin_lst->sym += i;
-        begin_lst = begin_lst->next;
-        i++;
-    }
-    return (i);
+		begin_lst = begin_lst->next;
+		i++;
+	}
+	return (i);
 }
 
-void	ft_lst_del(map **start)
+void	ft_lst_del(t_map **start)
 {
-	map *del;
+	t_map *del;
 
 	if (*start)
 	{
@@ -43,9 +43,9 @@ void	ft_lst_del(map **start)
 	}
 }
 
-void	ft_add_to_end_2lst(map **start, map *new)
+void	ft_add_to_end_2lst(t_map **start, t_map *new)
 {
-	map *list;
+	t_map *list;
 
 	if (*start)
 	{
@@ -59,12 +59,12 @@ void	ft_add_to_end_2lst(map **start, map *new)
 		*start = new;
 }
 
-map		*ft_new_elem2lst(char **buf)
+t_map	*ft_new_elem2lst(char **buf)
 {
-	map *new;
-	int i;
+	t_map	*new;
+	int		i;
 
-	if ((new = (map *)malloc(sizeof(map))))
+	if ((new = (map *)malloc(sizeof(t_map))))
 	{
 		new->sym = 'A';
 		new->offset_x = 0;

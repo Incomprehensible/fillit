@@ -6,7 +6,7 @@
 /*   By: crycherd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:34:27 by crycherd          #+#    #+#             */
-/*   Updated: 2019/06/12 21:54:10 by crycherd         ###   ########.fr       */
+/*   Updated: 2019/06/13 13:11:08 by bomanyte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	free_buf(char **buf, int i)
 	}
 }
 
-static char	**fill_buf(int fd)
+static char		**fill_buf(int fd)
 {
-	int i;
-	int check;
-	char *line;
-	char **buf;
+	int		i;
+	int		check;
+	char	*line;
+	char	**buf;
 
 	i = 0;
 	if ((buf = (char **)malloc(sizeof(char *) * 4)))
@@ -54,8 +54,8 @@ static char	**fill_buf(int fd)
 
 static int		check_end(fd)
 {
-	char *line;
-	int check;
+	char	*line;
+	int		check;
 
 	if ((check = get_next_line(fd, &line)) && (ft_strlen(line) > 0))
 	{
@@ -67,12 +67,12 @@ static int		check_end(fd)
 	return (check);
 }
 
-map		*ft_input(char *file_name)
+t_map	*ft_input(char *file_name)
 {
-	int check;
-	char **buf;
-	map *list;
-	int fd;
+	int		check;
+	char	**buf;
+	t_map	*list;
+	int		fd;
 
 	list = NULL;
 	check = 1;
